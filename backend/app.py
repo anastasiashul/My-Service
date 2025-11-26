@@ -5,118 +5,104 @@ import os
 from datetime import datetime
 
 app = Flask(__name__)
-CORS(app)  # Разрешаем CORS для фронтенда
+CORS(app)  # Разрешаем запросы от фронтенда
 
 # Файл для хранения данных
-DATA_FILE = 'data.json'
+DB_FILE = 'notes.json'
 
-def load_data():
-    """Загрузка данных из файла"""
-    try:
-        with open(DATA_FILE, 'r', encoding='utf-8') as f:
+def load_notes():
+    """Загружает заметки из JSON файла"""
+    if os.path.exists(DB_FILE):
+        with open(DB_FILE, 'r', encoding='utf-8') as f:
             return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return {'tasks': [], 'notes': []}
+    return []
 
-def save_data(data):
-    """Сохранение данных в файл"""
-    with open(DATA_FILE, 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+def save_notes(notes):
+    """Сохраняет заметки в JSON файл"""
+    with open(DB_FILE, 'w', encoding='utf-8') as f:
+        json.dump(notes, f, ensure_ascii=False, indent=2)
 
-# API для задач
-@app.route('/api/tasks', methods=['GET'])
-def get_tasks():
-    data = load_data()
-    return jsonify(data['tasks'])
+# CRUD операции для заметок
 
-@app.route('/api/tasks', methods=['POST'])
-def create_task():
-    data = load_data()
-    task_data = request.json
-    
-    task = {
-        'id': datetime.now().timestamp(),
-        'title': task_data.get('title'),
-        'description': task_data.get('description', ''),
-        'priority': task_data.get('priority', 'medium'),
-        'labels': task_data.get('labels', []),
-        'completed': False,
-        'createdAt': datetime.now().strftime('%d.%m.%Y %H:%M:%S')
-    }
-    
-    data['tasks'].append(task)
-    save_data(data)
-    return jsonify(task), 201
-
-@app.route('/api/tasks/<task_id>', methods=['PUT'])
-def update_task(task_id):
-    data = load_data()
-    task_data = request.json
-    
-    for task in data['tasks']:
-        if str(task['id']) == task_id:
-            task.update({
-                'title': task_data.get('title', task['title']),
-                'description': task_data.get('description', task['description']),
-                'priority': task_data.get('priority', task['priority']),
-                'completed': task_data.get('completed', task['completed'])
-            })
-            save_data(data)
-            return jsonify(task)
-    
-    return jsonify({'error': 'Task not found'}), 404
-
-@app.route('/api/tasks/<task_id>', methods=['DELETE'])
-def delete_task(task_id):
-    data = load_data()
-    data['tasks'] = [task for task in data['tasks'] if str(task['id']) != task_id]
-    save_data(data)
-    return jsonify({'message': 'Task deleted'})
-
-# API для заметок
 @app.route('/api/notes', methods=['GET'])
 def get_notes():
-    data = load_data()
-    return jsonify(data['notes'])
+    """Получить все заметки"""
+    notes = load_notes()
+    return jsonify(notes)
 
 @app.route('/api/notes', methods=['POST'])
 def create_note():
-    data = load_data()
-    note_data = request.json
+    """Создать новую заметку"""
+    data = request.json
     
-    note = {
-        'id': datetime.now().timestamp(),
-        'title': note_data.get('title'),
-        'content': note_data.get('content'),
-        'createdAt': datetime.now().strftime('%d.%m.%Y %H:%M:%S')
+    new_note = {
+        'id': len(load_notes()) + 1,
+        'title': data.get('title'),
+        'description': data.get('description'),
+        'status': data.get('status', 'todo'),
+        'priority': data.get('priority', 'medium'),
+        'labels': data.get('labels', []),
+        'due_date': data.get('due_date'),
+        'created_at': datetime.now().isoformat(),
+        'updated_at': datetime.now().isoformat()
     }
     
-    data['notes'].append(note)
-    save_data(data)
-    return jsonify(note), 201
-
-@app.route('/api/notes/<note_id>', methods=['PUT'])
-def update_note(note_id):
-    data = load_data()
-    note_data = request.json
+    notes = load_notes()
+    notes.append(new_note)
+    save_notes(notes)
     
-    for note in data['notes']:
-        if str(note['id']) == note_id:
+    return jsonify(new_note), 201
+
+@app.route('/api/notes/<int:note_id>', methods=['PUT'])
+def update_note(note_id):
+    """Обновить заметку"""
+    data = request.json
+    notes = load_notes()
+    
+    for note in notes:
+        if note['id'] == note_id:
             note.update({
-                'title': note_data.get('title', note['title']),
-                'content': note_data.get('content', note['content'])
+                'title': data.get('title', note['title']),
+                'description': data.get('description', note['description']),
+                'status': data.get('status', note['status']),
+                'priority': data.get('priority', note['priority']),
+                'labels': data.get('labels', note['labels']),
+                'due_date': data.get('due_date', note['due_date']),
+                'updated_at': datetime.now().isoformat()
             })
-            save_data(data)
+            save_notes(notes)
             return jsonify(note)
     
     return jsonify({'error': 'Note not found'}), 404
 
-@app.route('/api/notes/<note_id>', methods=['DELETE'])
+@app.route('/api/notes/<int:note_id>', methods=['DELETE'])
 def delete_note(note_id):
-    data = load_data()
-    data['notes'] = [note for note in data['notes'] if str(note['id']) != note_id]
-    save_data(data)
-    return jsonify({'message': 'Note deleted'})
+    """Удалить заметку"""
+    notes = load_notes()
+    notes = [note for note in notes if note['id'] != note_id]
+    save_notes(notes)
+    return '', 204
+
+# Фильтрация и поиск
+@app.route('/api/notes/filter', methods=['GET'])
+def filter_notes():
+    """Фильтрация заметок по статусу, приоритету, меткам"""
+    status = request.args.get('status')
+    priority = request.args.get('priority')
+    search = request.args.get('search')
+    
+    notes = load_notes()
+    
+    if status and status != 'all':
+        notes = [note for note in notes if note['status'] == status]
+    
+    if priority and priority != 'all':
+        notes = [note for note in notes if note['priority'] == priority]
+    
+    if search:
+        notes = [note for note in notes if search.lower() in note['title'].lower() or search.lower() in note['description'].lower()]
+    
+    return jsonify(notes)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, port=5000)
