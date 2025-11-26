@@ -1,0 +1,709 @@
+* {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f5f5f5;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .app-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .app-header {
+        text-align: center;
+        margin-bottom: 30px;
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .app-header h1 {
+        font-size: 2.8em;
+        margin-bottom: 10px;
+        color: #eef2f6;
+      }
+
+      .app-header p {
+        font-size: 1.2em;
+        color: #7f8c8d;
+      }
+
+      .control-panel {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .btn {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .btn-primary {
+        background: #6abac0;
+        color: rgb(255, 255, 255);
+      }
+
+      .btn-secondary {
+        background: #6abac0;
+        color: rgb(250, 247, 247);
+      }
+    .clearFilters{
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        font-weight: 450;
+        background: #5c696a;
+        color: rgb(255, 255, 255);
+    }
+      .btn-success {
+        background: linear(135deg, #2ecc71, #27ae60);
+        color: white;
+      }
+
+      .btn-danger {
+        background: linear(135deg, #e74c3c, #c0392b);
+        color: white;
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn.active {
+        background: linear(135deg, #3498db, #2980b9);
+      }
+
+      .create-section {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-container {
+        margin-bottom: 25px;
+      }
+
+      .form-container h2 {
+        margin-bottom: 20px;
+        color: #2284e7;
+        font-size: 1.4em;
+        border-bottom: 3px solid #2b3332;
+        padding-bottom: 10px;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 2px solid #ecf0f1;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+      }
+
+      input:focus,
+      textarea:focus,
+      select:focus {
+        outline: none;
+        border-color: #4ecdc4;
+      }
+
+      textarea {
+        height: 120px;
+        resize: vertical;
+      }
+
+      .data-section {
+        display: grid;
+        gap: 25px;
+      }
+
+      .data-container {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .data-container h2 {
+        margin-bottom: 20px;
+        color: #2284e7;
+        font-size: 1.6em;
+        border-bottom: 3px solid #4ecdc4;
+        padding-bottom: 12px;
+      }
+
+      .task-item,
+      .note-item {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        border-left: 5px solid #4ecdc4;
+        transition: transform 0.2s ease;
+      }
+
+      .task-item:hover,
+      .note-item:hover {
+        transform: translateX(5px);
+      }
+
+      .task-main {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 12px;
+      }
+
+      .task-title {
+        flex: 1;
+        font-weight: bold;
+        font-size: 1.2em;
+      }
+
+      .priority {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .priority.high {
+        background: linear(135deg, #ff6b6b, #ee5a52);
+        color: white;
+      }
+      .priority.medium {
+        background: linear(135deg, #fce38a, #f9d56e);
+        color: #333;
+      }
+      .priority.low {
+        background: linear(135deg, #4ecdc4, #44a08d);
+        color: white;
+      }
+
+      .task-labels {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+      }
+
+      .label {
+        padding: 6px 12px;
+        border-radius: 15px;
+        font-size: 14px;
+        color: white;
+        font-weight: 500;
+      }
+
+      .task-actions,
+      .note-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .btn-edit {
+        background: linear(135deg, #3498db, #2980b9);
+        color: white;
+        padding: 8px 16px;
+        font-size: 14px;
+        border-radius: 6px;
+      }
+
+      .btn-delete {
+        background: linear(135deg, #e74c3c, #c0392b);
+        color: white;
+        padding: 8px 16px;
+        font-size: 14px;
+        border-radius: 6px;
+      }
+
+      .completed .task-title {
+        text-decoration: line-through;
+        opacity: 0.7;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+      }
+
+      .modal-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        min-width: 500px;
+        max-width: 90%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .modal h3 {
+        margin-bottom: 25px;
+        color: #2c3e50;
+        font-size: 1.5em;
+        border-bottom: 3px solid #4ecdc4;
+        padding-bottom: 10px;
+      }
+
+      .labels-input {
+        margin: 20px 0;
+      }
+
+      .labels-preview {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 15px 0;
+      }
+
+      .label-badge {
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 14px;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+      }
+
+      .label-badge .remove {
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .available-tags {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 15px 0;
+      }
+
+      .tag-option {
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 14px;
+        color: white;
+        cursor: pointer;
+        opacity: 0.9;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .tag-option:hover {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 50px;
+        color: #416366;
+        font-size: 1.1em;
+      }
+
+      .form-row {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 15px;
+      }
+
+      .form-row .form-group {
+        flex: 1;
+      }
+
+      .quick-labels-title {
+        margin: 15px 0 10px 0;
+        color: #0dcdda;
+        font-weight: 500;
+      }
+
+      /* Планшеты (768px - 1024px) */
+      @media (max-width: 1024px) {
+        .app-container {
+          padding: 15px;
+          max-width: 100%;
+        }
+
+        .app-header {
+          padding: 25px 20px;
+        }
+
+        .app-header h1 {
+          font-size: 2.3em;
+        }
+
+        .create-section,
+        .data-container {
+          padding: 25px;
+        }
+
+        .control-panel {
+          gap: 10px;
+        }
+
+        .btn {
+          padding: 10px 20px;
+          font-size: 15px;
+        }
+
+        .modal-content {
+          min-width: 450px;
+          padding: 30px;
+        }
+      }
+
+      /* Большие мобильные (576px - 768px) */
+      @media (max-width: 768px) {
+        .app-container {
+          padding: 10px;
+        }
+
+        .app-header {
+          padding: 20px 15px;
+          margin-bottom: 20px;
+        }
+
+        .app-header h1 {
+          font-size: 2em;
+        }
+
+        .app-header p {
+          font-size: 1.1em;
+        }
+
+        .create-section,
+        .data-container {
+          padding: 20px;
+          margin-bottom: 20px;
+        }
+
+        .form-container h3,
+        .data-container h3 {
+          font-size: 1.3em;
+        }
+
+        .control-panel {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 8px;
+        }
+
+        .btn {
+          padding: 12px;
+          font-size: 16px;
+          text-align: center;
+        }
+
+        .form-row {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .task-main {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+
+        .task-title {
+          font-size: 1.1em;
+        }
+
+        .task-actions,
+        .note-actions {
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .btn-edit,
+        .btn-delete {
+          width: 100%;
+          text-align: center;
+        }
+
+        .modal-content {
+          min-width: 90%;
+          padding: 25px;
+          margin: 20px;
+        }
+
+        .available-tags {
+          gap: 8px;
+        }
+
+        .tag-option {
+          padding: 6px 12px;
+          font-size: 13px;
+        }
+      }
+
+      /* Мобильные устройства (до 576px) */
+      @media (max-width: 576px) {
+        .app-container {
+          padding: 8px;
+        }
+
+        .app-header {
+          padding: 15px 10px;
+          border-radius: 10px;
+        }
+
+        .app-header h1 {
+          font-size: 1.7em;
+        }
+
+        .app-header p {
+          font-size: 1em;
+        }
+
+        .create-section,
+        .data-container {
+          padding: 15px;
+          border-radius: 10px;
+        }
+
+        .form-container h3,
+        .data-container h3 {
+          font-size: 1.2em;
+          margin-bottom: 15px;
+        }
+
+        input,
+        textarea,
+        select {
+          padding: 10px;
+          font-size: 16px; 
+          margin-bottom: 12px;
+        }
+
+        textarea {
+          height: 100px;
+        }
+
+        .labels-input .form-row {
+          flex-direction: column;
+        }
+
+        .labels-input .form-row .btn {
+          margin-top: 5px;
+        }
+
+        .task-item,
+        .note-item {
+          padding: 15px;
+          margin-bottom: 12px;
+        }
+
+        .priority {
+          font-size: 12px;
+          padding: 4px 8px;
+        }
+
+        .label {
+          font-size: 12px;
+          padding: 4px 8px;
+        }
+
+        .label-badge {
+          padding: 6px 10px;
+          font-size: 12px;
+        }
+
+        .available-tags {
+          justify-content: center;
+        }
+
+        .tag-option {
+          padding: 5px 10px;
+          font-size: 12px;
+        }
+
+        .empty-state {
+          padding: 30px 20px;
+          font-size: 1em;
+        }
+
+        .modal-content {
+          padding: 20px;
+          margin: 10px;
+        }
+
+        .modal h3 {
+          font-size: 1.3em;
+        }
+
+        /* Улучшение для touch устройств */
+        .btn {
+          min-height: 44px; 
+        }
+
+        input,
+        select,
+        textarea {
+          min-height: 44px; 
+        }
+
+        .task-main input[type="checkbox"] {
+          transform: scale(1.2); /* Увеличиваем чекбоксы */
+          margin-right: 8px;
+        }
+      }
+
+      /* Очень маленькие экраны (до 360px) */
+      @media (max-width: 360px) {
+        .app-header h1 {
+          font-size: 1.5em;
+        }
+
+        .create-section,
+        .data-container {
+          padding: 12px;
+        }
+
+        .available-tags {
+          gap: 5px;
+        }
+
+        .tag-option {
+          padding: 4px 8px;
+          font-size: 11px;
+        }
+
+        .task-labels {
+          gap: 5px;
+        }
+
+        .label {
+          font-size: 11px;
+          padding: 3px 6px;
+        }
+
+        .modal-content {
+          padding: 15px;
+        }
+      }
+
+      /* Ландшафтная ориентация на мобильных */
+      @media (max-height: 500px) and (orientation: landscape) {
+        .app-header {
+          padding: 15px;
+          margin-bottom: 15px;
+        }
+
+        .create-section {
+          padding: 15px;
+          margin-bottom: 15px;
+        }
+
+        .data-container {
+          padding: 15px;
+        }
+
+        .modal-content {
+          max-height: 90vh;
+          overflow-y: auto;
+        }
+
+        textarea {
+          height: 80px;
+        }
+      }
+
+      /* Поддержка темной темы */
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: #1a1a1a;
+          color: #e0e0e0;
+        }
+
+        .app-header,
+        .create-section,
+        .data-container,
+        .modal-content {
+          background: #2d2d2d;
+          color: #e0e0e0;
+        }
+
+        .task-item,
+        .note-item {
+          background: #3d3d3d;
+        }
+
+        input,
+        textarea,
+        select {
+          background: #2d2d2d;
+          border-color: #4d4d4d;
+          color: #e0e0e0;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+          color: #888;
+        }
+      }
+
+      /* Печать
+      @media print {
+        .control-panel,
+        .create-section,
+        .task-actions,
+        .note-actions {
+          display: none !important;
+        }
+
+        .app-header {
+          box-shadow: none;
+          border: 2px solid #000;
+        }
+
+        .data-container {
+          box-shadow: none;
+          border: 1px solid #000;
+          break-inside: avoid;
+        }
+
+        .task-item,
+        .note-item {
+          break-inside: avoid;
+          border-left: 3px solid #000;
+        }
+      } */
