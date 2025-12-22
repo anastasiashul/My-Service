@@ -5,7 +5,7 @@ class Label:
         self.color = color
     
     def to_dict(self):
-        """Преобразовать в словарь для JSON"""
+        
         return {
             'id': self.id,
             'name': self.name,
@@ -14,9 +14,10 @@ class Label:
     
     @classmethod
     def from_dict(cls, data):
-        """Создать из словаря"""
+        
         return cls(
             id=data['id'],
             name=data['name'],
             color=data.get('color', '#3498db')
+
         )
